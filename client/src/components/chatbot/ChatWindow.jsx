@@ -156,11 +156,11 @@ export default function ChatWindow({
                 <button
                     type="submit"
                     disabled={isLoading || !inputValue.trim()}
-                    className="p-2 sm:p-2.5 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95 shrink-0 flex-shrink-0">
+                    className="p-2 sm:p-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95 shrink-0">
                     {isLoading ? (
                         <Loader2 className="animate-spin" size={16} />
                     ) : (
-                        <Send size={16} />
+                        <Send size={20} />
                     )}
                 </button>
             </form>

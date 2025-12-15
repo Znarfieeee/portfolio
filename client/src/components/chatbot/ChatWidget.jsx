@@ -45,18 +45,18 @@ export default function ChatWidget() {
         <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-2 sm:gap-3">
             {/* Chat Window */}
             {isOpen && (
-                <div className="w-screen h-screen sm:h-auto sm:w-auto sm:rounded-2xl fixed bottom-0 right-0 sm:relative sm:bottom-auto sm:right-auto mb-0 sm:mb-4 sm:w-[380px] sm:h-[550px] bg-card rounded-t-3xl sm:rounded-2xl shadow-2xl border-t sm:border border-border flex flex-col overflow-hidden backdrop-blur-sm">
+                <div className="w-screen h-screen sm:rounded-2xl fixed bottom-0 right-0 sm:relative sm:bottom-auto sm:right-auto mb-0 sm:mb-4 sm:w-md sm:h-[550px] bg-card rounded-t-3xl shadow-2xl border-t sm:border border-border flex flex-col overflow-hidden backdrop-blur-sm">
                     {/* Header */}
                     <div className="bg-muted/50 backdrop-blur-sm p-3 sm:p-4 border-b border-border flex justify-between items-center shrink-0">
                         <div className="flex items-center gap-2 min-w-0">
-                            <div className="w-2 h-2 bg-primary rounded-full animate-pulse flex-shrink-0" />
+                            <div className="w-2 h-2 bg-primary rounded-full animate-pulse shrink-0" />
                             <span className="font-medium text-foreground font-mono text-xs sm:text-sm truncate">
                                 AI Assistant
                             </span>
                         </div>
                         <button
                             onClick={() => setIsOpen(false)}
-                            className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0">
+                            className="text-muted-foreground hover:text-foreground transition-colors shrink-0">
                             ✕
                         </button>
                     </div>
@@ -72,12 +72,12 @@ export default function ChatWidget() {
                                         : "justify-start"
                                 }`}>
                                 <div
-                                    className={`max-w-[90%] sm:max-w-[85%] p-2 sm:p-3 rounded-xl text-xs sm:text-sm leading-normal ${
+                                    className={`max-w-[90%] sm:max-w-[85%] p-2 sm:p-3 rounded-xl text-md sm:text-sm font-sans leading-normal ${
                                         msg.role === "user"
-                                            ? "bg-primary text-primary-foreground rounded-br-none font-mono break-words"
-                                            : "bg-card border border-border text-foreground rounded-bl-none shadow-sm break-words"
+                                            ? "bg-primary text-primary-foreground rounded-br-none font-mono wrap-break-word"
+                                            : "bg-card border border-border text-foreground rounded-bl-none shadow-sm wrap-break-word"
                                     }`}>
-                                    <div className="whitespace-pre-wrap break-words">
+                                    <div className="whitespace-pre-wrap wrap-break-word">
                                         {msg.text}
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@ export default function ChatWidget() {
                                                         question
                                                     )
                                                 }
-                                                className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-muted/50 hover:bg-primary/20 border border-border hover:border-primary/50 rounded-lg text-xs text-foreground text-left transition-all hover:scale-[1.02] active:scale-[0.98] font-mono line-clamp-2">
+                                                className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-muted/50 hover:bg-primary/20 border border-border hover:border-primary/50 rounded-lg text-sm text-foreground text-left transition-all hover:scale-[1.02] active:scale-[0.98] font-mono line-clamp-2">
                                                 {question}
                                             </button>
                                         )
@@ -128,13 +128,13 @@ export default function ChatWidget() {
                             value={inputValue}
                             onChange={e => setInputValue(e.target.value)}
                             placeholder="Ask..."
-                            className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 bg-input border border-border rounded-full text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-mono min-w-0"
+                            className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 bg-input border border-border rounded-full text-sm sm:text-md text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-mono min-w-0"
                             disabled={isLoading}
                         />
                         <button
                             type="submit"
                             disabled={isLoading || !inputValue.trim()}
-                            className="p-2 sm:p-2.5 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95 shrink-0 flex-shrink-0">
+                            className="p-2 sm:p-2.5 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95 shrink-0">
                             {isLoading ? (
                                 <Loader2 className="animate-spin" size={16} />
                             ) : (
