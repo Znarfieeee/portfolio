@@ -16,7 +16,7 @@ export default function ChatWidget() {
         "What are Franz's main skills?",
         "Tell me about Franz's projects",
         "What's Franz's work experience?",
-        "How can I contact Franz?"
+        "How can I contact Franz?",
     ]
 
     // Show suggested questions only when there's just the initial greeting
@@ -36,7 +36,7 @@ export default function ChatWidget() {
         setInputValue("")
     }
 
-    const handleSuggestedQuestion = (question) => {
+    const handleSuggestedQuestion = question => {
         if (isLoading) return
         sendMessage(question)
     }
@@ -77,7 +77,7 @@ export default function ChatWidget() {
                                             ? "bg-primary text-primary-foreground rounded-br-none font-mono"
                                             : "bg-card border border-border text-foreground rounded-bl-none shadow-sm"
                                     }`}>
-                                    <div className="whitespace-pre-wrap break-words">
+                                    <div className="whitespace-pre-wrap wrap-break-word">
                                         {msg.text}
                                     </div>
                                 </div>
@@ -85,17 +85,31 @@ export default function ChatWidget() {
                         ))}
 
                         {/* Loading indicator */}
-                        {isLoading && messages[messages.length - 1]?.role === "bot" && !messages[messages.length - 1]?.text && (
-                            <div className="flex justify-start">
-                                <div className="bg-card border border-border rounded-xl rounded-bl-none p-3">
-                                    <div className="flex gap-1">
-                                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                        <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                        {isLoading &&
+                            messages[messages.length - 1]?.role === "bot" &&
+                            !messages[messages.length - 1]?.text && (
+                                <div className="flex justify-start">
+                                    <div className="bg-card border border-border rounded-xl rounded-bl-none p-3">
+                                        <div className="flex gap-1">
+                                            <div
+                                                className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                                                style={{
+                                                    animationDelay: "0ms",
+                                                }}></div>
+                                            <div
+                                                className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                                                style={{
+                                                    animationDelay: "150ms",
+                                                }}></div>
+                                            <div
+                                                className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                                                style={{
+                                                    animationDelay: "300ms",
+                                                }}></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
 
                         {/* Suggested Questions */}
                         {showSuggestions && !isLoading && (
@@ -104,14 +118,20 @@ export default function ChatWidget() {
                                     Try asking:
                                 </p>
                                 <div className="grid grid-cols-1 gap-2">
-                                    {suggestedQuestions.map((question, index) => (
-                                        <button
-                                            key={index}
-                                            onClick={() => handleSuggestedQuestion(question)}
-                                            className="px-3 py-2 bg-muted/50 hover:bg-primary/20 border border-border hover:border-primary/50 rounded-lg text-xs text-foreground text-left transition-all hover:scale-[1.02] active:scale-[0.98] font-mono">
-                                            {question}
-                                        </button>
-                                    ))}
+                                    {suggestedQuestions.map(
+                                        (question, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() =>
+                                                    handleSuggestedQuestion(
+                                                        question
+                                                    )
+                                                }
+                                                className="px-3 py-2 bg-muted/50 hover:bg-primary/20 border border-border hover:border-primary/50 rounded-lg text-xs text-foreground text-left transition-all hover:scale-[1.02] active:scale-[0.98] font-mono">
+                                                {question}
+                                            </button>
+                                        )
+                                    )}
                                 </div>
                             </div>
                         )}
