@@ -42,27 +42,27 @@ export default function ChatWidget() {
     }
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-2 sm:gap-3">
             {/* Chat Window */}
             {isOpen && (
-                <div className="mb-4 w-[380px] h-[550px] bg-card rounded-2xl shadow-2xl border border-border flex flex-col overflow-hidden backdrop-blur-sm">
+                <div className="w-screen h-screen sm:h-auto sm:w-auto sm:rounded-2xl fixed bottom-0 right-0 sm:relative sm:bottom-auto sm:right-auto mb-0 sm:mb-4 sm:w-[380px] sm:h-[550px] bg-card rounded-t-3xl sm:rounded-2xl shadow-2xl border-t sm:border border-border flex flex-col overflow-hidden backdrop-blur-sm">
                     {/* Header */}
-                    <div className="bg-muted/50 backdrop-blur-sm p-4 border-b border-border flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                            <span className="font-medium text-foreground font-mono text-sm">
+                    <div className="bg-muted/50 backdrop-blur-sm p-3 sm:p-4 border-b border-border flex justify-between items-center shrink-0">
+                        <div className="flex items-center gap-2 min-w-0">
+                            <div className="w-2 h-2 bg-primary rounded-full animate-pulse flex-shrink-0" />
+                            <span className="font-medium text-foreground font-mono text-xs sm:text-sm truncate">
                                 AI Assistant
                             </span>
                         </div>
                         <button
                             onClick={() => setIsOpen(false)}
-                            className="text-muted-foreground hover:text-foreground transition-colors">
-                            <X size={20} />
+                            className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0">
+                            ✕
                         </button>
                     </div>
 
                     {/* Messages List */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background/95">
+                    <div className="flex-1 overflow-y-auto p-2.5 sm:p-4 space-y-2.5 sm:space-y-4 bg-background/95">
                         {messages.map(msg => (
                             <div
                                 key={msg.id}
@@ -72,52 +72,25 @@ export default function ChatWidget() {
                                         : "justify-start"
                                 }`}>
                                 <div
-                                    className={`max-w-[85%] p-3 rounded-xl text-sm ${
+                                    className={`max-w-[90%] sm:max-w-[85%] p-2 sm:p-3 rounded-xl text-xs sm:text-sm leading-normal ${
                                         msg.role === "user"
-                                            ? "bg-primary text-primary-foreground rounded-br-none font-mono"
-                                            : "bg-card border border-border text-foreground rounded-bl-none shadow-sm"
+                                            ? "bg-primary text-primary-foreground rounded-br-none font-mono break-words"
+                                            : "bg-card border border-border text-foreground rounded-bl-none shadow-sm break-words"
                                     }`}>
-                                    <div className="whitespace-pre-wrap wrap-break-word">
+                                    <div className="whitespace-pre-wrap break-words">
                                         {msg.text}
                                     </div>
                                 </div>
                             </div>
                         ))}
 
-                        {/* Loading indicator */}
-                        {isLoading &&
-                            messages[messages.length - 1]?.role === "bot" &&
-                            !messages[messages.length - 1]?.text && (
-                                <div className="flex justify-start">
-                                    <div className="bg-card border border-border rounded-xl rounded-bl-none p-3">
-                                        <div className="flex gap-1">
-                                            <div
-                                                className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
-                                                style={{
-                                                    animationDelay: "0ms",
-                                                }}></div>
-                                            <div
-                                                className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
-                                                style={{
-                                                    animationDelay: "150ms",
-                                                }}></div>
-                                            <div
-                                                className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
-                                                style={{
-                                                    animationDelay: "300ms",
-                                                }}></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
                         {/* Suggested Questions */}
                         {showSuggestions && !isLoading && (
-                            <div className="space-y-2">
-                                <p className="text-xs text-muted-foreground text-center font-mono">
+                            <div className="space-y-2 mt-2">
+                                <p className="text-xs text-muted-foreground text-center font-mono px-1">
                                     Try asking:
                                 </p>
-                                <div className="grid grid-cols-1 gap-2">
+                                <div className="grid grid-cols-1 gap-1.5 sm:gap-2 px-0.5 sm:px-0">
                                     {suggestedQuestions.map(
                                         (question, index) => (
                                             <button
@@ -127,7 +100,7 @@ export default function ChatWidget() {
                                                         question
                                                     )
                                                 }
-                                                className="px-3 py-2 bg-muted/50 hover:bg-primary/20 border border-border hover:border-primary/50 rounded-lg text-xs text-foreground text-left transition-all hover:scale-[1.02] active:scale-[0.98] font-mono">
+                                                className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-muted/50 hover:bg-primary/20 border border-border hover:border-primary/50 rounded-lg text-xs text-foreground text-left transition-all hover:scale-[1.02] active:scale-[0.98] font-mono line-clamp-2">
                                                 {question}
                                             </button>
                                         )
@@ -149,35 +122,37 @@ export default function ChatWidget() {
                     {/* Input Area */}
                     <form
                         onSubmit={handleSubmit}
-                        className="p-3 bg-muted/30 backdrop-blur-sm border-t border-border flex gap-2">
+                        className="p-2 sm:p-3 bg-muted/30 backdrop-blur-sm border-t border-border flex gap-2 shrink-0">
                         <input
                             type="text"
                             value={inputValue}
                             onChange={e => setInputValue(e.target.value)}
-                            placeholder="Ask a question..."
-                            className="flex-1 px-4 py-2.5 bg-input border border-border rounded-full text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-mono"
+                            placeholder="Ask..."
+                            className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 bg-input border border-border rounded-full text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-mono min-w-0"
                             disabled={isLoading}
                         />
                         <button
                             type="submit"
                             disabled={isLoading || !inputValue.trim()}
-                            className="p-2.5 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95">
+                            className="p-2 sm:p-2.5 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-105 active:scale-95 shrink-0 flex-shrink-0">
                             {isLoading ? (
-                                <Loader2 className="animate-spin" size={18} />
+                                <Loader2 className="animate-spin" size={16} />
                             ) : (
-                                <Send size={18} />
+                                <Send size={16} />
                             )}
                         </button>
                     </form>
                 </div>
             )}
 
-            {/* Floating Button (FAB) */}
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-primary/20">
-                {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
-            </button>
+            {/* Floating Button (FAB) - Hidden when chat is open on mobile */}
+            {!isOpen && (
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="w-12 h-12 sm:w-14 sm:h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-primary/20 shrink-0">
+                    <MessageSquare size={20} />
+                </button>
+            )}
         </div>
     )
 }

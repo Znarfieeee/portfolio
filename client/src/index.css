@@ -224,6 +224,34 @@ body {
     .perspective {
         perspective: 600px;
     }
+
+    /* Bounce Ball Animation */
+    @keyframes bounce-ball {
+        0%,
+        100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        25% {
+            transform: translateY(-16px) scale(1.1);
+            opacity: 0.9;
+        }
+        50% {
+            transform: translateY(-24px) scale(1);
+            opacity: 1;
+        }
+        75% {
+            transform: translateY(-8px) scale(0.95);
+            opacity: 0.85;
+        }
+    }
+
+    .bounce-ball {
+        @apply w-2.5 h-2.5 sm:w-3 sm:h-3 bg-primary rounded-full;
+        animation: bounce-ball 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+            infinite;
+    }
+
     @keyframes rolling-in {
         0% {
             opacity: 0;

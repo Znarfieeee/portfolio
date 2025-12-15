@@ -15,10 +15,10 @@ export const useChatStream = () => {
 
     // Session management with localStorage persistence
     const [sessionId] = useState(() => {
-        const stored = localStorage.getItem('flowise-session-id')
+        const stored = localStorage.getItem("flowise-session-id")
         if (stored) return stored
         const newId = `session-${Date.now()}`
-        localStorage.setItem('flowise-session-id', newId)
+        localStorage.setItem("flowise-session-id", newId)
         return newId
     })
 
@@ -43,68 +43,69 @@ export const useChatStream = () => {
         try {
             abortControllerRef.current = new AbortController()
 
-            console.log('=== Flowise API Call ===')
-            console.log('Endpoint:', FLOWISE_PREDICTION_ENDPOINT)
-            console.log('Has API Key:', !!FLOWISE_CONFIG.apiKey)
-            console.log('Session ID:', sessionId)
-            console.log('Question:', userText)
+            console.log("=== Flowise API Call ===")
+            console.log("Endpoint:", FLOWISE_PREDICTION_ENDPOINT)
+            console.log("Has API Key:", !!FLOWISE_CONFIG.apiKey)
+            console.log("Session ID:", sessionId)
+            console.log("Question:", userText)
 
             const requestBody = {
                 question: userText,
                 overrideConfig: {
-                    sessionId: sessionId
-                }
+                    sessionId: sessionId,
+                },
             }
 
-            console.log('Request Body:', requestBody)
+            console.log("Request Body:", requestBody)
 
             const resp = await fetch(FLOWISE_PREDICTION_ENDPOINT, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${FLOWISE_CONFIG.apiKey}`
+                    Authorization: `Bearer ${FLOWISE_CONFIG.apiKey}`,
                 },
                 body: JSON.stringify(requestBody),
                 signal: abortControllerRef.current.signal,
             })
 
-            console.log('=== Response Info ===')
-            console.log('Status:', resp.status)
-            console.log('OK:', resp.ok)
-            console.log('Content-Type:', resp.headers.get('content-type'))
+            console.log("=== Response Info ===")
+            console.log("Status:", resp.status)
+            console.log("OK:", resp.ok)
+            console.log("Content-Type:", resp.headers.get("content-type"))
 
             if (!resp.ok) {
                 const errorText = await resp.text()
-                console.error('Error Response:', errorText)
+                console.error("Error Response:", errorText)
                 throw new Error(`API Error: ${resp.status}`)
             }
 
             // Get the full response as text first
             const responseText = await resp.text()
-            console.log('=== Raw Response ===')
+            console.log("=== Raw Response ===")
             console.log(responseText)
 
             // Try to parse as JSON
-            let botResponse = ''
+            let botResponse = ""
             try {
                 const jsonData = JSON.parse(responseText)
-                console.log('=== Parsed JSON ===')
+                console.log("=== Parsed JSON ===")
                 console.log(jsonData)
 
                 // Try different possible field names that Flowise might use
-                botResponse = jsonData.text ||
-                             jsonData.answer ||
-                             jsonData.response ||
-                             jsonData.output ||
-                             jsonData.result ||
-                             jsonData.message ||
-                             (jsonData.data && jsonData.data.text) ||
-                             responseText
+                botResponse =
+                    jsonData.text ||
+                    jsonData.answer ||
+                    jsonData.response ||
+                    jsonData.output ||
+                    jsonData.result ||
+                    jsonData.message ||
+                    (jsonData.data && jsonData.data.text) ||
+                    responseText
 
-                console.log('Extracted Bot Response:', botResponse)
-            } catch (e) {
+                console.log("Extracted Bot Response:", botResponse)
+            } catch {
                 // If not JSON, use raw text
-                console.log('Not JSON, using raw text')
+                console.log("Not JSON, using raw text")
                 botResponse = responseText
             }
 
@@ -115,9 +116,8 @@ export const useChatStream = () => {
                     id: botMessageId,
                     role: "bot",
                     text: botResponse,
-                }
+                },
             ])
-
         } catch (err) {
             if (err.name === "AbortError") {
                 console.log("Request aborted by user")
@@ -125,11 +125,16 @@ export const useChatStream = () => {
                 console.error("=== Error ===", err)
 
                 let errorMessage = "Something went wrong. Please try again."
-                if (err.message.includes('Failed to fetch')) {
-                    errorMessage = "Unable to connect to AI service. Check your internet connection."
-                } else if (err.message.includes('401') || err.message.includes('403')) {
-                    errorMessage = "Authentication failed. Please check API credentials."
-                } else if (err.message.includes('429')) {
+                if (err.message.includes("Failed to fetch")) {
+                    errorMessage =
+                        "Unable to connect to AI service. Check your internet connection."
+                } else if (
+                    err.message.includes("401") ||
+                    err.message.includes("403")
+                ) {
+                    errorMessage =
+                        "Authentication failed. Please check API credentials."
+                } else if (err.message.includes("429")) {
                     errorMessage = "Rate limit exceeded. Please wait a moment."
                 }
 
