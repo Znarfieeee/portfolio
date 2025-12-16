@@ -49,19 +49,31 @@ const App = () => {
             if (heroRef.current) {
                 const heroHeight = heroRef.current.offsetHeight
                 const scrollPosition = window.scrollY
+                const isSmallScreen = window.innerWidth < 1024
 
-                setShowHamburger(scrollPosition > heroHeight * 0.8)
+                // Always show hamburger on small screens, after 80% scroll on large screens
+                setShowHamburger(
+                    isSmallScreen || scrollPosition > heroHeight * 0.8
+                )
 
-                if (scrollPosition <= heroHeight * 0.8 && isMenuOpen) {
+                if (
+                    !isSmallScreen &&
+                    scrollPosition <= heroHeight * 0.8 &&
+                    isMenuOpen
+                ) {
                     setIsMenuOpen(false)
                 }
             }
         }
 
         window.addEventListener("scroll", handleScroll)
+        window.addEventListener("resize", handleScroll)
         handleScroll()
 
-        return () => window.removeEventListener("scroll", handleScroll)
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+            window.removeEventListener("resize", handleScroll)
+        }
     }, [isMenuOpen])
 
     // Prevent body scroll when menu is open
@@ -151,7 +163,7 @@ const App = () => {
                                         className="flex justify-end p-2 text-foreground hover:text-primary transition-colors z-60 duration-400"
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 3 }}
+                                        exit={{ opacity: 0, scale: 0.8 }}
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.95 }}>
                                         {isMenuOpen ? (

@@ -47,7 +47,7 @@ const Hero = React.forwardRef((props, ref) => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.3, ease: "easeOut" }}>
                         {/* Name and Role */}
-                        <div className="space-y-4 lg:space-y-6 mt-30 md:mt-5">
+                        <div className="space-y-4 lg:space-y-6 mt-20 md:mt-5">
                             <DecryptText
                                 text="Mari Franz Espelita"
                                 className="text-4xl sm:text-6xl lg:text-6xl xl:text-6xl font-bold text-foreground leading-none tracking-tight"
