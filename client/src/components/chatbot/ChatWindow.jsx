@@ -48,8 +48,8 @@ export default function ChatWindow({
         <div className="w-full h-full bg-card rounded-t-3xl sm:rounded-2xl flex flex-col overflow-hidden backdrop-blur-sm">
             {/* Header */}
             <div className="bg-muted/50 backdrop-blur-sm p-3 sm:p-4 border-b border-border flex justify-between items-center shrink-0">
-                <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse flex-shrink-0" />
+                <div className="fixed inset-0 z-50 sm:relative sm:inset-0 flex items-center gap-2 min-w-0">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse shrink-0" />
                     <span className="font-medium text-foreground font-mono text-xs sm:text-sm truncate">
                         AI Assistant
                     </span>
@@ -57,7 +57,7 @@ export default function ChatWindow({
                 {onClose && (
                     <button
                         onClick={onClose}
-                        className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0">
+                        className="text-muted-foreground hover:text-foreground transition-colors shrink-0">
                         ✕
                     </button>
                 )}
@@ -76,10 +76,10 @@ export default function ChatWindow({
                         <div
                             className={`max-w-[90%] sm:max-w-[85%] p-2 sm:p-3 rounded-xl text-xs sm:text-sm leading-normal ${
                                 msg.role === "user"
-                                    ? "bg-primary text-primary-foreground rounded-br-none font-mono break-words"
-                                    : "bg-card border border-border text-foreground rounded-bl-none shadow-sm break-words"
+                                    ? "bg-primary text-primary-foreground rounded-br-none font-mono wrap-break-word"
+                                    : "bg-card border border-border text-foreground rounded-bl-none shadow-sm wrap-break-word"
                             }`}>
-                            <div className="whitespace-pre-wrap break-words">
+                            <div className="whitespace-pre-wrap wrap-break-word">
                                 {msg.text}
                             </div>
                         </div>
