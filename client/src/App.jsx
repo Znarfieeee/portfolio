@@ -80,67 +80,57 @@ const App = () => {
     return (
         <>
             {/* Navigation */}
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
+            <nav
+                className={`z-50 bg-transparent transition-all duration-300 ${
+                    showHamburger ? "fixed top-0 left-0 right-0" : "relative"
+                }`}>
                 <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
-                    <div className="flex justify-between items-start py-4">
-                        {/* Logo/Title (always rendered, just disables pointer events when hamburger is shown) */}
-                        {(() => {
-                            return (
-                                <motion.div
-                                    className={`text-muted-foreground font-mono text-lg tracking-wide select-none flex gap-px transition-opacity duration-200 ${
-                                        showHamburger
-                                            ? "pointer-events-none opacity-60"
-                                            : "cursor-pointer opacity-100"
-                                    }`}
-                                    style={{ userSelect: "none" }}
-                                    onMouseEnter={
-                                        showHamburger
-                                            ? undefined
-                                            : handleHoverStart
-                                    }
-                                    onMouseLeave={
-                                        showHamburger
-                                            ? undefined
-                                            : handleHoverEnd
-                                    }>
-                                    {"Wabi Sabi".split("").map((char, idx) => (
-                                        <motion.span
-                                            key={idx}
-                                            animate={
-                                                isHovered
-                                                    ? effects[idx]
-                                                    : {
-                                                          rotate: 0,
-                                                          skewX: 0,
-                                                          skewY: 0,
-                                                          scale: 1,
-                                                      }
-                                            }
-                                            transition={{
-                                                type: "spring",
-                                                stiffness: 200,
-                                                damping: 12,
-                                            }}
-                                            whileTap={{ scale: 0.92 }}
-                                            className="inline-block">
-                                            {char === " " ? "\u00A0" : char}
-                                        </motion.span>
-                                    ))}
-                                </motion.div>
-                            )
-                        })()}
+                    <div
+                        className={`flex ${
+                            showHamburger ? "justify-end" : "justify-between"
+                        } items-start py-4`}>
+                        {/* Logo/Title - Hide when hamburger shows */}
+                        {!showHamburger && (
+                            <motion.div
+                                className="text-muted-foreground font-mono text-lg tracking-wide select-none flex gap-px cursor-pointer opacity-100"
+                                style={{ userSelect: "none" }}
+                                onMouseEnter={handleHoverStart}
+                                onMouseLeave={handleHoverEnd}>
+                                {"Wabi Sabi".split("").map((char, idx) => (
+                                    <motion.span
+                                        key={idx}
+                                        animate={
+                                            isHovered
+                                                ? effects[idx]
+                                                : {
+                                                      rotate: 0,
+                                                      skewX: 0,
+                                                      skewY: 0,
+                                                      scale: 1,
+                                                  }
+                                        }
+                                        transition={{
+                                            type: "spring",
+                                            stiffness: 200,
+                                            damping: 10,
+                                        }}
+                                        whileTap={{ scale: 1.92 }}
+                                        className="inline-block">
+                                        {char === " " ? "\u00A0" : char}
+                                    </motion.span>
+                                ))}
+                            </motion.div>
+                        )}
 
-                        {/* Navigation/Buttons: fixed width box to prevent jitter */}
                         <div className="flex items-end min-w-[180px] justify-end">
-                            {/* Desktop Navigation - Show when not in hamburger mode */}
                             <AnimatePresence>
                                 {!showHamburger && (
                                     <motion.div
                                         className="flex flex-col sm:flex-row items-end gap-2"
-                                        initial={{ opacity: 0, y: -10 }}
+                                        initial={{ opacity: 0, y: -5 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -10 }}
-                                        transition={{ duration: 0.3 }}>
+                                        exit={{ opacity: 0, y: -8 }}
+                                        transition={{ duration: 0.1 }}>
                                         {navLinks.map(link => (
                                             <a
                                                 key={link.name}
@@ -158,10 +148,10 @@ const App = () => {
                                 {showHamburger && (
                                     <motion.button
                                         onClick={toggleMenu}
-                                        className="p-2 text-foreground hover:text-primary transition-colors z-60 duration-400"
+                                        className="flex justify-end p-2 text-foreground hover:text-primary transition-colors z-60 duration-400"
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.8 }}
+                                        exit={{ opacity: 0, scale: 3 }}
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.95 }}>
                                         {isMenuOpen ? (

@@ -1,12 +1,20 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
+import { ChevronDown } from "lucide-react"
+import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+} from "@/components/ui/accordion"
 
 const About = () => {
     const [isVisible, setIsVisible] = useState(false)
     const sectionRef = useRef(null)
 
     useEffect(() => {
+        let section = sectionRef.current
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -16,26 +24,28 @@ const About = () => {
             { threshold: 0.1 }
         )
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
+        if (section) {
+            observer.observe(section)
         }
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current)
+            if (section) {
+                observer.unobserve(section)
             }
         }
     }, [])
 
     const skills = {
-        Frontend: [
-            "React",
-            "Next.js",
-            "TypeScript",
-            "Tailwind CSS",
-            "Framer Motion",
+        Frontend: ["React.js", "Tailwind CSS", "Framer Motion", "Motion.dev"],
+        Backend: [
+            "Node.js",
+            "Express",
+            "MySQL",
+            "Supabase",
+            "REST APIs",
+            "Flask",
+            "FASTApi",
         ],
-        Backend: ["Node.js", "Express", "MySQL", "Supabase", "REST APIs"],
         Tools: ["Git", "Docker", "Figma", "VS Code", "Vite"],
         "Soft Skills": [
             "Problem Solving",
@@ -138,7 +148,41 @@ const About = () => {
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground font-mono mb-8 lg:mb-12">
                         SKILLS & EXPERTISE
                     </h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+
+                    {/* Mobile Accordion View */}
+                    <div className="lg:hidden">
+                        <Accordion
+                            type="single"
+                            collapsible
+                            className="space-y-3">
+                            {Object.entries(skills).map(
+                                ([category, items], index) => (
+                                    <AccordionItem
+                                        key={category}
+                                        value={`skill-${index}`}
+                                        className="border border-border/50 rounded-lg overflow-hidden data-[state=open]:border-primary/50">
+                                        <AccordionTrigger className="bg-muted/5 hover:bg-muted/10 px-4 py-4 text-primary/80 font-mono uppercase text-lg">
+                                            {category}
+                                        </AccordionTrigger>
+                                        <AccordionContent className="bg-background px-4 py-4 border-t border-border/50">
+                                            <ul className="space-y-2">
+                                                {items.map(skill => (
+                                                    <li
+                                                        key={skill}
+                                                        className="text-muted-foreground text-sm">
+                                                        • {skill}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                )
+                            )}
+                        </Accordion>
+                    </div>
+
+                    {/* Desktop Grid View */}
+                    <div className="hidden lg:grid grid-cols-4 gap-8">
                         {Object.entries(skills).map(
                             ([category, items], index) => (
                                 <motion.div
@@ -178,6 +222,42 @@ const About = () => {
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground font-mono mb-8 lg:mb-12">
                         EXPERIENCE
                     </h3>
+
+                    {/* Mobile Accordion View
+                    <div className="lg:hidden">
+                        <Accordion
+                            type="single"
+                            collapsible
+                            className="space-y-3">
+                            {experience.map((item, index) => (
+                                <AccordionItem
+                                    key={index}
+                                    value={`exp-${index}`}
+                                    className="border border-border/50 rounded-lg overflow-hidden data-[state=open]:border-primary/50">
+                                    <AccordionTrigger className="bg-muted/5 hover:bg-muted/10 px-4 py-4">
+                                        <div className="text-left">
+                                            <div className="text-sm font-mono text-primary">
+                                                {item.year}
+                                            </div>
+                                            <div className="text-base font-bold text-foreground">
+                                                {item.title}
+                                            </div>
+                                        </div>
+                                    </AccordionTrigger>
+                                    <AccordionContent className="bg-background px-4 py-4 border-t border-border/50">
+                                        <div className="text-sm font-mono text-muted-foreground uppercase tracking-wide mb-2">
+                                            {item.company}
+                                        </div>
+                                        <p className="text-muted-foreground text-sm leading-relaxed">
+                                            {item.description}
+                                        </p>
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </div> */}
+
+                    {/* Desktop Timeline View */}
                     <div className="space-y-8 lg:space-y-12">
                         {experience.map((item, index) => (
                             <motion.div

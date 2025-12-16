@@ -61,7 +61,7 @@ const Contact = () => {
             name: "LinkedIn",
             icon: Linkedin,
             url: "https://linkedin.com/marifranzespelita",
-            color: "hover:text-[#0077B5]",
+            color: "hover:text-[#12a7cc]",
         },
         {
             name: "Facebook",
@@ -73,7 +73,7 @@ const Contact = () => {
             name: "Instagram",
             icon: Instagram,
             url: "https://instagram.com/ambotoykapoy",
-            color: "hover:text-[#1DA1F2]",
+            color: "hover:text-[#cc128b]",
         },
     ]
 

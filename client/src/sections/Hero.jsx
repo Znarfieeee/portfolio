@@ -7,7 +7,6 @@ import OrganicImage from "@/components/OrganicImage"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 import HeroImg from "@/assets/images/Img3.jpg"
-import "./Hero.css"
 
 const Hero = React.forwardRef((props, ref) => {
     const [showPrefix, setShowPrefix] = useState(false)
@@ -34,12 +33,15 @@ const Hero = React.forwardRef((props, ref) => {
     }
 
     return (
-        <section className="hero-container" ref={ref} id="home">
-            <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 py-10">
+        <section
+            className="flex min-h-100vh items-center bg-background pt-4"
+            ref={ref}
+            id="home">
+            <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12 py-2">
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     {/* Left Content */}
                     <motion.div
-                        className="space-y-8 lg:space-y-12"
+                        className="space-y-8 lg:space-y-10"
                         style={{ y: textY, opacity: textOpacity }}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -79,10 +81,10 @@ const Hero = React.forwardRef((props, ref) => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3, duration: 0.6 }}>
                                 <p className="text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
-                                    Open to job opportunities worldwide.
-                                    Passionate about building polished,
-                                    intuitive, and thoughtful digital
-                                    experiences that leave a mark.
+                                    Available for global opportunities,
+                                    committed to crafting tailored full-stack
+                                    web solutions that are both technically
+                                    sound and user-focused.
                                 </p>
 
                                 {/* Contact Button */}
