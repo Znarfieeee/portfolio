@@ -21,7 +21,7 @@ const About = () => {
                     setIsVisible(true)
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.1 },
         )
 
         if (section) {
@@ -56,6 +56,13 @@ const About = () => {
     }
 
     const experience = [
+        {
+            year: "2026",
+            title: "Project Manager",
+            company: "Symph, Inc.",
+            description:
+                "Leading cross-functional teams to deliver scalable web solutions. Coordinating development, design, and QA efforts while ensuring timely project delivery, stakeholder communication, and client satisfaction.",
+        },
         {
             year: "2025",
             title: "Fullstack Web Developer",
@@ -176,7 +183,7 @@ const About = () => {
                                             </ul>
                                         </AccordionContent>
                                     </AccordionItem>
-                                )
+                                ),
                             )}
                         </Accordion>
                     </div>
@@ -209,7 +216,7 @@ const About = () => {
                                         ))}
                                     </ul>
                                 </motion.div>
-                            )
+                            ),
                         )}
                     </div>
                 </motion.div>

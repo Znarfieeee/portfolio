@@ -42,7 +42,8 @@ export default function ChatWindow({
         sendMessage(question)
     }
 
-    if (!isOpen) return null
+    if (!isOpen) return null5
+    
 
     return (
         <div className="w-full h-full bg-card rounded-t-3xl sm:rounded-2xl flex flex-col overflow-hidden backdrop-blur-sm">

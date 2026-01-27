@@ -20,8 +20,8 @@ const Hero = React.forwardRef((props, ref) => {
     const roles = [
         "Video Editor",
         "Cinematographer",
-        "web dev",
-        "fullstack web developer",
+        "Project Manager",
+        "Fullstack WebDeveloper",
     ]
 
     const handleNameComplete = () => {

@@ -26,7 +26,7 @@ const Contact = () => {
                     setIsVisible(true)
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.1 },
         )
 
         if (section) {
@@ -57,16 +57,16 @@ const Contact = () => {
             url: "https://github.com/Znarfieeee",
             color: "hover:text-foreground",
         },
-        {
-            name: "LinkedIn",
-            icon: Linkedin,
-            url: "https://linkedin.com/marifranzespelita",
-            color: "hover:text-[#12a7cc]",
-        },
+        // {
+        //     name: "LinkedIn",
+        //     icon: Linkedin,
+        //     url: "https://linkedin.com/marifranzespelita",
+        //     color: "hover:text-[#12a7cc]",
+        // },
         {
             name: "Facebook",
             icon: Facebook,
-            url: "https://twitter.com/prnsssdagreat",
+            url: "https://facebook.com/prnsssdagreat",
             color: "hover:text-[#1DA1F2]",
         },
         {
